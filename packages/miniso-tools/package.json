@@ -1,0 +1,23 @@
+{
+	"name": "miniso-tools",
+	"version": "1.0.0",
+	"description": "for js sdk",
+	"main": "dist/main.umd.js",
+	"module": "dist/main.esm.js",
+	"types": "types/index.d.ts",
+	"scripts": {
+		"build": "npm run clean:dist && npm run lint:fix && rollup -c rollup.config.ts",
+		"clean:dist": "rimraf ./dist",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "lint-staged --allow-empty",
+		"lint:fix": "eslint --fix --ignore-path .eslintignore ."
+	},
+	"keywords": [
+		"javascript",
+		"sdk",
+		"utils"
+	],
+	"author": "melodyLLL",
+	"license": "MIT",
+	"devDependencies": {}
+}
