@@ -1,23 +1,38 @@
 {
-	"name": "miniso-tools",
-	"version": "1.0.0",
-	"description": "for js sdk",
-	"main": "dist/main.umd.js",
-	"module": "dist/main.esm.js",
-	"types": "types/index.d.ts",
-	"scripts": {
-		"build": "npm run clean:dist && npm run lint:fix && rollup -c rollup.config.ts",
-		"clean:dist": "rimraf ./dist",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "lint-staged --allow-empty",
-		"lint:fix": "eslint --fix --ignore-path .eslintignore ."
-	},
-	"keywords": [
-		"javascript",
-		"sdk",
-		"utils"
-	],
-	"author": "melodyLLL",
-	"license": "MIT",
-	"devDependencies": {}
+  "name": "miniso-tools",
+  "version": "1.0.0",
+  "description": "for js sdk",
+  "main": "dist/main.umd.js",
+  "module": "dist/main.esm.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "npm run clean:dist && rollup -c rollup.config.ts",
+    "clean:dist": "rimraf ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "lint-staged --allow-empty",
+    "lint:fix": "eslint --fix --ignore-path .eslintignore ."
+  },
+  "keywords": [
+    "javascript",
+    "sdk",
+    "utils"
+  ],
+  "author": "melodyLLL",
+  "license": "MIT",
+  "devDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "rollup": "^2.79.1",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@types/jest": "^27.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "rollup-plugin-filesize": "^9.1.2",
+    "rollup-plugin-progress": "^1.1.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^3.0.2",
+    "eslint": "^8.25.0"
+  }
 }

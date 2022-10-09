@@ -16,5 +16,5 @@
   },
   "compileOnSave": false,
   "exclude": ["node_modules/*", "dist/*"],
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../miniso-tools/src/hooks/useConstCallback.ts"]
 }

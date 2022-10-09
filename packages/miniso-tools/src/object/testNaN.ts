@@ -3,8 +3,8 @@
  * @param value 目标对象
  * @returns {Boolean}
  */
-function testNaN(value) {
-  return typeof value === "number" && isNaN(value);
+function testNaN(value: any) {
+  return typeof value === 'number' && isNaN(value)
 }
 
-export default testNaN;
+export default testNaN

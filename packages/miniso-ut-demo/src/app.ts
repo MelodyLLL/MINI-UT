@@ -1,18 +1,23 @@
-import { Component } from 'react'
+import { Component, Props } from 'react'
 import './app.scss'
 
-class App extends Component {
+type State = any
+class App extends Component<State> {
+  constructor(props) {
+    super(props)
+  }
+  componentDidMount() {}
 
-  componentDidMount () {}
+  componentDidShow() {}
 
-  componentDidShow () {}
+  componentDidHide() {}
 
-  componentDidHide () {}
-
-  componentDidCatchError () {}
+  componentDidCatchError() {
+    console.log(123)
+  }
 
   // this.props.children 是将要会渲染的页面
-  render () {
+  render() {
     return this.props.children
   }
 }

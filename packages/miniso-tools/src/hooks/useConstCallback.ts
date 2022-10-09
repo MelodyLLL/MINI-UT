@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef } from 'react'
 
 /**
  * Hook to ensure a callback function always has the same identify.
@@ -9,9 +9,9 @@ import { useRef } from 'react';
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,space-before-function-paren
 export default function useConstCallback<T extends (...args: any[]) => any>(callback: T): T {
-  const ref = useRef<T>();
+  const ref = useRef<T>()
   if (!ref.current) {
-    ref.current = callback;
+    ref.current = callback
   }
-  return ref.current;
+  return ref.current
 }

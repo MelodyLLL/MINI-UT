@@ -1,0 +1,21 @@
+{
+  "fixedThousandsNumber": "src/number/fixedThousandsNumber.ts",
+  "digitUppercase": "src/number/digitUppercase.ts",
+  "formatFileSize": "src/number/formatFileSize.ts",
+
+  "debounce": "src/function/debounce.ts",
+  "throttle": "src/function/throttle.ts",
+
+  "deepClone": "src/object/deepClone.ts",
+  "isEmpty": "src/object/isEmpty.ts",
+  "testNaN": "src/object/testNaN.ts",
+
+  "formatFixedDate": "src/time/formatFixedDate.ts",
+  "formatPassTime": "src/time/formatPassTime.ts",
+
+  "useTicker": "src/hooks/useTicker.ts",
+  "useRefCallback": "src/hooks/useRefCallback.ts",
+  "useConstCallback": "src/hooks/useConstCallback.ts",
+
+  "Ticker":"src/class/Ticker.ts"
+}
