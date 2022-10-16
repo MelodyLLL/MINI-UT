@@ -7,3 +7,8 @@ node_modules/
 
 # Build outputs
 packages/**/dist/
+packages/**/build/
+
+
+# others
+.log

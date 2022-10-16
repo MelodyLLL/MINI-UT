@@ -1,3 +1,5 @@
+# 打包UI库和🔧库
+``yarn build``
 # 执行子包脚本
 ``lerna run [script]``
 
@@ -8,8 +10,8 @@
 ``lerna clean``
 
 # 安装依赖到根目录
-``yarn add [module] -W -D``
+``yarn add [dep] -W -D``
 
 # 安装到子包目录
-``yarn workspace <module> add [module]``
-``lerna add --scope=<module> [module]``
+``yarn workspace <module> add [dep]``
+``lerna add --scope=<module> [dep]``

@@ -1,23 +1,25 @@
 import { Component } from 'react'
 import { View, Text } from '@tarojs/components'
+import { Button } from '@miniso/miniso-ui'
 import './index.scss'
 
 export default class Index extends Component {
+  UNSAFE_componentWillMount() {}
 
-  componentWillMount () { }
+  componentDidMount() {}
 
-  componentDidMount () { }
+  componentWillUnmount() {}
 
-  componentWillUnmount () { }
+  componentDidShow() {}
 
-  componentDidShow () { }
+  componentDidHide() {}
 
-  componentDidHide () { }
-
-  render () {
+  render() {
     return (
-      <View className='index'>
-        <Text>Hello world!</Text>
+      <View className="index">
+        <Text>
+          Hello world!<Button disabled>w ca le</Button>
+        </Text>
       </View>
     )
   }

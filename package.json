@@ -10,8 +10,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
-    "build:component": "lerna run --scope miniso-ui build",
-    "clean": "lerna run clean",
+    "build:component": "lerna run --scope @miniso/miniso-ui build",
+    "preview": "lerna run --scope @miniso/miniso-ut-demo dev:h5",
+    "docs": "lerna run --scope @miniso/miniso-ut-docs dev",
+    "clean": "lerna clean",
+    "clean:all": "workspaces run clean",
     "prepare": "husky install",
     "lint": "lint-staged --allow-empty"
   },
