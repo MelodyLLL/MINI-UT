@@ -4,4 +4,4 @@ node_modules/
 # Build outputs
 packages/**/dist/
 
-.log
+yarn-error.log

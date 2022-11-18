@@ -12,9 +12,7 @@ class App extends Component<State> {
 
   componentDidHide() {}
 
-  componentDidCatchError() {
-    console.log(123)
-  }
+  componentDidCatchError() {}
 
   // this.props.children 是将要会渲染的页面
   render() {

@@ -12,9 +12,9 @@
     "build": "lerna run build",
     "build:component": "lerna run --scope @miniso/miniso-ui build",
     "preview": "lerna run --scope @miniso/miniso-ut-demo dev:h5",
-    "docs": "lerna run --scope @miniso/miniso-ut-docs dev",
-    "clean": "lerna clean",
-    "clean:all": "workspaces run clean",
+    "docs:dev": "lerna run --scope @miniso/miniso-ut-docs dev",
+    "docs:build": "lerna run --scope @miniso/miniso-ut-docs build",
+    "clean": "lerna clean && rimraf ./node_modules",
     "prepare": "husky install",
     "lint": "lint-staged --allow-empty"
   },

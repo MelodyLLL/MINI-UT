@@ -6,8 +6,8 @@ node_modules/
 .idea
 
 # Build outputs
-packages/**/dist/
-packages/**/build/
+packages/**/dist/**
+packages/**/build/**
 
 
 # others

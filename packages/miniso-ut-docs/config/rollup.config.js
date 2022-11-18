@@ -4,7 +4,12 @@ import resolve from '@rollup/plugin-node-resolve'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import css from 'rollup-plugin-css-only'
+import sveltePreprocess from 'svelte-preprocess'
+import RollupCopy from 'rollup-plugin-copy'
 
+const { resolveFile } = require('./util')
+
+const toMarkdown = require('./rollup-plugin-toMarkdown.js')
 const production = !process.env.ROLLUP_WATCH
 
 function serve() {
@@ -17,10 +22,14 @@ function serve() {
   return {
     writeBundle() {
       if (server) return
-      server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-        stdio: ['ignore', 'inherit', 'inherit'],
-        shell: true
-      })
+      server = require('child_process').spawn(
+        'npm',
+        ['run', 'start', '--', '--dev'],
+        {
+          stdio: ['ignore', 'inherit', 'inherit'],
+          shell: true
+        }
+      )
 
       process.on('SIGTERM', toExit)
       process.on('exit', toExit)
@@ -28,24 +37,37 @@ function serve() {
   }
 }
 
+const preprocess = sveltePreprocess({
+  scss: {
+    includesPaths: ['src', resolve('node_modules')]
+  },
+  // scss: true,
+  sass: true,
+  postcss: {
+    plugins: [require('autoprefixer')]
+  }
+})
+
 export default {
   input: 'src/main.js',
   output: {
     sourcemap: true,
     format: 'iife',
     name: 'app',
-    file: 'public/build/bundle.js'
+    file: resolveFile('public/build/bundle.js')
   },
   plugins: [
+    css({ output: 'bundle.css' }),
+    toMarkdown(),
     svelte({
       compilerOptions: {
         // enable run-time checks when not in production
         dev: !production
-      }
+      },
+      preprocess
     }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
-    css({ output: 'bundle.css' }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
@@ -68,7 +90,16 @@ export default {
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terser()
+    production && terser(),
+
+    RollupCopy({
+      targets: [
+        {
+          src: resolveFile('assets/*'),
+          dest: resolveFile('public/')
+        }
+      ]
+    })
   ],
   watch: {
     clearScreen: false

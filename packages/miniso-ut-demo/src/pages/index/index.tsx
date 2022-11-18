@@ -1,9 +1,8 @@
-import { Component } from 'react'
+import React from 'react'
 import { View, Text } from '@tarojs/components'
-import { Button } from '@miniso/miniso-ui'
 import './index.scss'
 
-export default class Index extends Component {
+export default class Index extends React.Component {
   UNSAFE_componentWillMount() {}
 
   componentDidMount() {}
@@ -13,13 +12,10 @@ export default class Index extends Component {
   componentDidShow() {}
 
   componentDidHide() {}
-
   render() {
     return (
-      <View className="index">
-        <Text>
-          Hello world!<Button disabled>w ca le</Button>
-        </Text>
+      <View className='index'>
+        <Text>Hello world!</Text>
       </View>
     )
   }

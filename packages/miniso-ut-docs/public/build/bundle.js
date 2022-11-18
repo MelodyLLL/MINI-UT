@@ -1,476 +1,421 @@
-;(function (l, r) {
-  if (!l || l.getElementById('livereloadscript')) return
-  r = l.createElement('script')
-  r.async = 1
-  r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'
-  r.id = 'livereloadscript'
-  l.getElementsByTagName('head')[0].appendChild(r)
-})(self.document)
 var app = (function () {
   'use strict'
-
-  function noop() {}
-  function add_location(element, file, line, column, char) {
-    element.__svelte_meta = {
-      loc: { file, line, column, char }
-    }
+  function n() {}
+  function t(n) {
+    return n()
   }
-  function run(fn) {
-    return fn()
-  }
-  function blank_object() {
+  function s() {
     return Object.create(null)
   }
-  function run_all(fns) {
-    fns.forEach(run)
+  function e(n) {
+    n.forEach(t)
   }
-  function is_function(thing) {
-    return typeof thing === 'function'
+  function a(n) {
+    return 'function' == typeof n
   }
-  function safe_not_equal(a, b) {
-    return a != a ? b == b : a !== b || (a && typeof a === 'object') || typeof a === 'function'
+  function r(n, t) {
+    return n != n
+      ? t == t
+      : n !== t || (n && 'object' == typeof n) || 'function' == typeof n
   }
-  function is_empty(obj) {
-    return Object.keys(obj).length === 0
+  function l(n, t) {
+    n.appendChild(t)
   }
-  function append(target, node) {
-    target.appendChild(node)
+  function o(n, t, s) {
+    n.insertBefore(t, s || null)
   }
-  function insert(target, node, anchor) {
-    target.insertBefore(node, anchor || null)
+  function c(n) {
+    n.parentNode.removeChild(n)
   }
-  function detach(node) {
-    node.parentNode.removeChild(node)
+  function d(n) {
+    return document.createElement(n)
   }
-  function element(name) {
-    return document.createElement(name)
+  function i() {
+    return (n = ' '), document.createTextNode(n)
+    var n
   }
-  function text(data) {
-    return document.createTextNode(data)
+  function p(n, t, s) {
+    null == s
+      ? n.removeAttribute(t)
+      : n.getAttribute(t) !== s && n.setAttribute(t, s)
   }
-  function space() {
-    return text(' ')
+  let u
+  function h(n) {
+    u = n
   }
-  function attr(node, attribute, value) {
-    if (value == null) node.removeAttribute(attribute)
-    else if (node.getAttribute(attribute) !== value) node.setAttribute(attribute, value)
+  function f(n) {
+    ;(function () {
+      if (!u)
+        throw new Error('Function called outside component initialization')
+      return u
+    })().$$.on_mount.push(n)
   }
-  function children(element) {
-    return Array.from(element.childNodes)
+  const m = [],
+    g = [],
+    $ = [],
+    v = [],
+    j = Promise.resolve()
+  let x = !1
+  function _(n) {
+    $.push(n)
   }
-  function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
-    const e = document.createEvent('CustomEvent')
-    e.initCustomEvent(type, bubbles, cancelable, detail)
-    return e
-  }
-
-  let current_component
-  function set_current_component(component) {
-    current_component = component
-  }
-
-  const dirty_components = []
-  const binding_callbacks = []
-  const render_callbacks = []
-  const flush_callbacks = []
-  const resolved_promise = Promise.resolve()
-  let update_scheduled = false
-  function schedule_update() {
-    if (!update_scheduled) {
-      update_scheduled = true
-      resolved_promise.then(flush)
-    }
-  }
-  function add_render_callback(fn) {
-    render_callbacks.push(fn)
-  }
-  // flush() calls callbacks in this order:
-  // 1. All beforeUpdate callbacks, in order: parents before children
-  // 2. All bind:this callbacks, in reverse order: children before parents.
-  // 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
-  //    for afterUpdates called during the initial onMount, which are called in
-  //    reverse order: children before parents.
-  // Since callbacks might update component values, which could trigger another
-  // call to flush(), the following steps guard against this:
-  // 1. During beforeUpdate, any updated components will be added to the
-  //    dirty_components array and will cause a reentrant call to flush(). Because
-  //    the flush index is kept outside the function, the reentrant call will pick
-  //    up where the earlier call left off and go through all dirty components. The
-  //    current_component value is saved and restored so that the reentrant call will
-  //    not interfere with the "parent" flush() call.
-  // 2. bind:this callbacks cannot trigger new flush() calls.
-  // 3. During afterUpdate, any updated components will NOT have their afterUpdate
-  //    callback called a second time; the seen_callbacks set, outside the flush()
-  //    function, guarantees this behavior.
-  const seen_callbacks = new Set()
-  let flushidx = 0 // Do *not* move this inside the flush() function
-  function flush() {
-    const saved_component = current_component
+  const y = new Set()
+  let w = 0
+  function b() {
+    const n = u
     do {
-      // first, call beforeUpdate functions
-      // and update components
-      while (flushidx < dirty_components.length) {
-        const component = dirty_components[flushidx]
-        flushidx++
-        set_current_component(component)
-        update(component.$$)
+      for (; w < m.length; ) {
+        const n = m[w]
+        w++, h(n), k(n.$$)
       }
-      set_current_component(null)
-      dirty_components.length = 0
-      flushidx = 0
-      while (binding_callbacks.length) binding_callbacks.pop()()
-      // then, once components are updated, call
-      // afterUpdate functions. This may cause
-      // subsequent updates...
-      for (let i = 0; i < render_callbacks.length; i += 1) {
-        const callback = render_callbacks[i]
-        if (!seen_callbacks.has(callback)) {
-          // ...so guard against infinite loops
-          seen_callbacks.add(callback)
-          callback()
-        }
+      for (h(null), m.length = 0, w = 0; g.length; ) g.pop()()
+      for (let n = 0; n < $.length; n += 1) {
+        const t = $[n]
+        y.has(t) || (y.add(t), t())
       }
-      render_callbacks.length = 0
-    } while (dirty_components.length)
-    while (flush_callbacks.length) {
-      flush_callbacks.pop()()
-    }
-    update_scheduled = false
-    seen_callbacks.clear()
-    set_current_component(saved_component)
+      $.length = 0
+    } while (m.length)
+    for (; v.length; ) v.pop()()
+    ;(x = !1), y.clear(), h(n)
   }
-  function update($$) {
-    if ($$.fragment !== null) {
-      $$.update()
-      run_all($$.before_update)
-      const dirty = $$.dirty
-      $$.dirty = [-1]
-      $$.fragment && $$.fragment.p($$.ctx, dirty)
-      $$.after_update.forEach(add_render_callback)
+  function k(n) {
+    if (null !== n.fragment) {
+      n.update(), e(n.before_update)
+      const t = n.dirty
+      ;(n.dirty = [-1]),
+        n.fragment && n.fragment.p(n.ctx, t),
+        n.after_update.forEach(_)
     }
   }
-  const outroing = new Set()
-  function transition_in(block, local) {
-    if (block && block.i) {
-      outroing.delete(block)
-      block.i(local)
-    }
+  const A = new Set()
+  function C(n, t) {
+    n && n.i && (A.delete(n), n.i(t))
   }
-  function mount_component(component, target, anchor, customElement) {
-    const { fragment, after_update } = component.$$
-    fragment && fragment.m(target, anchor)
-    if (!customElement) {
-      // onMount happens before the initial afterUpdate
-      add_render_callback(() => {
-        const new_on_destroy = component.$$.on_mount.map(run).filter(is_function)
-        // if the component was destroyed immediately
-        // it will update the `$$.on_destroy` reference to `null`.
-        // the destructured on_destroy may still reference to the old array
-        if (component.$$.on_destroy) {
-          component.$$.on_destroy.push(...new_on_destroy)
-        } else {
-          // Edge case - component was destroyed immediately,
-          // most likely as a result of a binding initialising
-          run_all(new_on_destroy)
-        }
-        component.$$.on_mount = []
-      })
-    }
-    after_update.forEach(add_render_callback)
+  function q(n, t, s, e) {
+    if (n && n.o) {
+      if (A.has(n)) return
+      A.add(n),
+        undefined.c.push(() => {
+          A.delete(n), e && (s && n.d(1), e())
+        }),
+        n.o(t)
+    } else e && e()
   }
-  function destroy_component(component, detaching) {
-    const $$ = component.$$
-    if ($$.fragment !== null) {
-      run_all($$.on_destroy)
-      $$.fragment && $$.fragment.d(detaching)
-      // TODO null out other refs, including component.$$ (but need to
-      // preserve final state?)
-      $$.on_destroy = $$.fragment = null
-      $$.ctx = []
-    }
+  function D(n) {
+    n && n.c()
   }
-  function make_dirty(component, i) {
-    if (component.$$.dirty[0] === -1) {
-      dirty_components.push(component)
-      schedule_update()
-      component.$$.dirty.fill(0)
-    }
-    component.$$.dirty[(i / 31) | 0] |= 1 << i % 31
+  function E(n, s, r, l) {
+    const { fragment: o, after_update: c } = n.$$
+    o && o.m(s, r),
+      l ||
+        _(() => {
+          const s = n.$$.on_mount.map(t).filter(a)
+          n.$$.on_destroy ? n.$$.on_destroy.push(...s) : e(s),
+            (n.$$.on_mount = [])
+        }),
+      c.forEach(_)
   }
-  function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
-    const parent_component = current_component
-    set_current_component(component)
-    const $$ = (component.$$ = {
+  function S(n, t) {
+    const s = n.$$
+    null !== s.fragment &&
+      (e(s.on_destroy),
+      s.fragment && s.fragment.d(t),
+      (s.on_destroy = s.fragment = null),
+      (s.ctx = []))
+  }
+  function M(n, t) {
+    ;-1 === n.$$.dirty[0] &&
+      (m.push(n), x || ((x = !0), j.then(b)), n.$$.dirty.fill(0)),
+      (n.$$.dirty[(t / 31) | 0] |= 1 << t % 31)
+  }
+  function N(t, a, r, l, o, d, i, p = [-1]) {
+    const f = u
+    h(t)
+    const m = (t.$$ = {
       fragment: null,
       ctx: [],
-      // state
-      props,
-      update: noop,
-      not_equal,
-      bound: blank_object(),
-      // lifecycle
+      props: d,
+      update: n,
+      not_equal: o,
+      bound: s(),
       on_mount: [],
       on_destroy: [],
       on_disconnect: [],
       before_update: [],
       after_update: [],
-      context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
-      // everything else
-      callbacks: blank_object(),
-      dirty,
-      skip_bound: false,
-      root: options.target || parent_component.$$.root
+      context: new Map(a.context || (f ? f.$$.context : [])),
+      callbacks: s(),
+      dirty: p,
+      skip_bound: !1,
+      root: a.target || f.$$.root
     })
-    append_styles && append_styles($$.root)
-    let ready = false
-    $$.ctx = instance
-      ? instance(component, options.props || {}, (i, ret, ...rest) => {
-          const value = rest.length ? rest[0] : ret
-          if ($$.ctx && not_equal($$.ctx[i], ($$.ctx[i] = value))) {
-            if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value)
-            if (ready) make_dirty(component, i)
-          }
-          return ret
-        })
-      : []
-    $$.update()
-    ready = true
-    run_all($$.before_update)
-    // `false` as a special case of no DOM component
-    $$.fragment = create_fragment ? create_fragment($$.ctx) : false
-    if (options.target) {
-      if (options.hydrate) {
-        const nodes = children(options.target)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        $$.fragment && $$.fragment.l(nodes)
-        nodes.forEach(detach)
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        $$.fragment && $$.fragment.c()
-      }
-      if (options.intro) transition_in(component.$$.fragment)
-      mount_component(component, options.target, options.anchor, options.customElement)
-      flush()
+    i && i(m.root)
+    let g = !1
+    if (
+      ((m.ctx = r
+        ? r(t, a.props || {}, (n, s, ...e) => {
+            const a = e.length ? e[0] : s
+            return (
+              m.ctx &&
+                o(m.ctx[n], (m.ctx[n] = a)) &&
+                (!m.skip_bound && m.bound[n] && m.bound[n](a), g && M(t, n)),
+              s
+            )
+          })
+        : []),
+      m.update(),
+      (g = !0),
+      e(m.before_update),
+      (m.fragment = !!l && l(m.ctx)),
+      a.target)
+    ) {
+      if (a.hydrate) {
+        const n = (function (n) {
+          return Array.from(n.childNodes)
+        })(a.target)
+        m.fragment && m.fragment.l(n), n.forEach(c)
+      } else m.fragment && m.fragment.c()
+      a.intro && C(t.$$.fragment),
+        E(t, a.target, a.anchor, a.customElement),
+        b()
     }
-    set_current_component(parent_component)
+    h(f)
   }
-  /**
-   * Base class for Svelte components. Used when dev=false.
-   */
-  class SvelteComponent {
+  class I {
     $destroy() {
-      destroy_component(this, 1)
-      this.$destroy = noop
+      S(this, 1), (this.$destroy = n)
     }
-    $on(type, callback) {
-      if (!is_function(callback)) {
-        return noop
-      }
-      const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = [])
-      callbacks.push(callback)
-      return () => {
-        const index = callbacks.indexOf(callback)
-        if (index !== -1) callbacks.splice(index, 1)
-      }
+    $on(t, s) {
+      if (!a(s)) return n
+      const e = this.$$.callbacks[t] || (this.$$.callbacks[t] = [])
+      return (
+        e.push(s),
+        () => {
+          const n = e.indexOf(s)
+          ;-1 !== n && e.splice(n, 1)
+        }
+      )
     }
-    $set($$props) {
-      if (this.$$set && !is_empty($$props)) {
-        this.$$.skip_bound = true
-        this.$$set($$props)
-        this.$$.skip_bound = false
-      }
+    $set(n) {
+      var t
+      this.$$set &&
+        ((t = n), 0 !== Object.keys(t).length) &&
+        ((this.$$.skip_bound = !0), this.$$set(n), (this.$$.skip_bound = !1))
     }
   }
-
-  function dispatch_dev(type, detail) {
-    document.dispatchEvent(custom_event(type, Object.assign({ version: '3.52.0' }, detail), { bubbles: true }))
-  }
-  function append_dev(target, node) {
-    dispatch_dev('SvelteDOMInsert', { target, node })
-    append(target, node)
-  }
-  function insert_dev(target, node, anchor) {
-    dispatch_dev('SvelteDOMInsert', { target, node, anchor })
-    insert(target, node, anchor)
-  }
-  function detach_dev(node) {
-    dispatch_dev('SvelteDOMRemove', { node })
-    detach(node)
-  }
-  function attr_dev(node, attribute, value) {
-    attr(node, attribute, value)
-    if (value == null) dispatch_dev('SvelteDOMRemoveAttribute', { node, attribute })
-    else dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value })
-  }
-  function set_data_dev(text, data) {
-    data = '' + data
-    if (text.wholeText === data) return
-    dispatch_dev('SvelteDOMSetData', { node: text, data })
-    text.data = data
-  }
-  function validate_slots(name, slot, keys) {
-    for (const slot_key of Object.keys(slot)) {
-      if (!~keys.indexOf(slot_key)) {
-        console.warn(`<${name}> received an unexpected slot "${slot_key}".`)
-      }
-    }
-  }
-  /**
-   * Base class for Svelte components with some minor dev-enhancements. Used when dev=true.
-   */
-  class SvelteComponentDev extends SvelteComponent {
-    constructor(options) {
-      if (!options || (!options.target && !options.$$inline)) {
-        throw new Error("'target' is a required option")
-      }
-      super()
-    }
-    $destroy() {
-      super.$destroy()
-      this.$destroy = () => {
-        console.warn('Component was already destroyed') // eslint-disable-line no-console
-      }
-    }
-    $capture_state() {}
-    $inject_state() {}
-  }
-
-  /* src/App.svelte generated by Svelte v3.52.0 */
-
-  const file = 'src/App.svelte'
-
-  function create_fragment(ctx) {
-    let main
-    let h1
-    let t0
-    let t1
-    let t2
-    let t3
-    let p
-    let t4
-    let a
-    let t6
-
-    const block = {
-      c: function create() {
-        main = element('main')
-        h1 = element('h1')
-        t0 = text('Hello ')
-        t1 = text(/*name*/ ctx[0])
-        t2 = text('!')
-        t3 = space()
-        p = element('p')
-        t4 = text('Visit the ')
-        a = element('a')
-        a.textContent = 'Svelte tutorial'
-        t6 = text(' to learn how to build Svelte apps.')
-        attr_dev(h1, 'class', 'svelte-1tky8bj')
-        add_location(h1, file, 5, 1, 46)
-        attr_dev(a, 'href', 'https://svelte.dev/tutorial')
-        add_location(a, file, 6, 14, 83)
-        add_location(p, file, 6, 1, 70)
-        attr_dev(main, 'class', 'svelte-1tky8bj')
-        add_location(main, file, 4, 0, 38)
+  function T(t) {
+    let s
+    return {
+      c() {
+        ;(s = d('header')), p(s, 'class', 'red svelte-h6jsc2')
       },
-      l: function claim(nodes) {
-        throw new Error('options.hydrate only works if the component was compiled with the `hydratable: true` option')
+      m(n, t) {
+        o(n, s, t)
       },
-      m: function mount(target, anchor) {
-        insert_dev(target, main, anchor)
-        append_dev(main, h1)
-        append_dev(h1, t0)
-        append_dev(h1, t1)
-        append_dev(h1, t2)
-        append_dev(main, t3)
-        append_dev(main, p)
-        append_dev(p, t4)
-        append_dev(p, a)
-        append_dev(p, t6)
-      },
-      p: function update(ctx, [dirty]) {
-        if (dirty & /*name*/ 1) set_data_dev(t1, /*name*/ ctx[0])
-      },
-      i: noop,
-      o: noop,
-      d: function destroy(detaching) {
-        if (detaching) detach_dev(main)
+      p: n,
+      i: n,
+      o: n,
+      d(n) {
+        n && c(s)
       }
     }
-
-    dispatch_dev('SvelteRegisterBlock', {
-      block,
-      id: create_fragment.name,
-      type: 'component',
-      source: '',
-      ctx
-    })
-
-    return block
   }
-
-  function instance($$self, $$props, $$invalidate) {
-    let { $$slots: slots = {}, $$scope } = $$props
-    validate_slots('App', slots, [])
-    let { name } = $$props
-
-    $$self.$$.on_mount.push(function () {
-      if (name === undefined && !('name' in $$props || $$self.$$.bound[$$self.$$.props['name']])) {
-        console.warn("<App> was created without expected prop 'name'")
+  class O extends I {
+    constructor(n) {
+      super(), N(this, n, null, T, r, {})
+    }
+  }
+  function B(t) {
+    let s
+    return {
+      c() {
+        ;(s = d('footer')),
+          (s.innerHTML =
+            '<div class="copyright svelte-89spop">Copyright 2022 Melody</div>'),
+          p(s, 'class', 'svelte-89spop')
+      },
+      m(n, t) {
+        o(n, s, t)
+      },
+      p: n,
+      i: n,
+      o: n,
+      d(n) {
+        n && c(s)
       }
-    })
-
-    const writable_props = ['name']
-
-    Object.keys($$props).forEach(key => {
-      if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`)
-    })
-
-    $$self.$$set = $$props => {
-      if ('name' in $$props) $$invalidate(0, (name = $$props.name))
-    }
-
-    $$self.$capture_state = () => ({ name })
-
-    $$self.$inject_state = $$props => {
-      if ('name' in $$props) $$invalidate(0, (name = $$props.name))
-    }
-
-    if ($$props && '$$inject' in $$props) {
-      $$self.$inject_state($$props.$$inject)
-    }
-
-    return [name]
-  }
-
-  class App extends SvelteComponentDev {
-    constructor(options) {
-      super(options)
-      init(this, options, instance, create_fragment, safe_not_equal, { name: 0 })
-
-      dispatch_dev('SvelteRegisterComponent', {
-        component: this,
-        tagName: 'App',
-        options,
-        id: create_fragment.name
-      })
-    }
-
-    get name() {
-      throw new Error("<App>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'")
-    }
-
-    set name(value) {
-      throw new Error("<App>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'")
     }
   }
-
-  const app = new App({
-    target: document.body,
-    props: {
-      name: 'world'
+  class H extends I {
+    constructor(n) {
+      super(), N(this, n, null, B, r, {})
     }
-  })
-
-  return app
+  }
+  function L(t) {
+    let s
+    return {
+      c() {
+        ;(s = d('div')),
+          p(s, 'id', 'markdown_container'),
+          p(s, 'class', 'markdown_container_cls')
+      },
+      m(n, t) {
+        o(n, s, t)
+      },
+      p: n,
+      i: n,
+      o: n,
+      d(n) {
+        n && c(s)
+      }
+    }
+  }
+  function z(n) {
+    return (
+      f(() => {
+        const n = new DOMParser().parseFromString(
+          '<h1>Divider 分隔符</h1>\n<hr />\n<p>分割内容提示符</p>\n<h2>使用指南</h2>\n<p>在 Taro 文件中引入组件</p>\n\n            <div class="md_code_wrapper">\n              <div class="md_code_inner"><pre class="hljs"><code><span class="hljs-keyword">import</span> { <span class="hljs-title class_">AtDivider</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;taro-ui&#x27;</span>\n</code></pre>\n\n          </div>\n        </div><p><strong>组件依赖的样式文件（仅按需引用时需要）</strong></p>\n\n            <div class="md_code_wrapper">\n              <div class="md_code_inner"><pre class="hljs"><code><span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;~taro-ui/dist/style/components/divider.scss&quot;</span>;\n<span class="hljs-keyword">@import</span> <span class="hljs-string">&quot;~taro-ui/dist/style/components/icon.scss&quot;</span>;\n</code></pre>\n\n          </div>\n        </div><h2>一般用法</h2>\n\n            <div class="md_code_wrapper">\n              <div class="md_code_inner"><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">AtDivider</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&#x27;分割线&#x27;</span> /&gt;</span>\n</code></pre>\n\n          </div>\n        </div><h2>自定义颜色</h2>\n\n            <div class="md_code_wrapper">\n              <div class="md_code_inner"><pre class="hljs"><code><span class="hljs-tag">&lt;<span class="hljs-name">AtDivider</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&#x27;没有更多了&#x27;</span> <span class="hljs-attr">fontColor</span>=<span class="hljs-string">&#x27;#ed3f14&#x27;</span> <span class="hljs-attr">lineColor</span>=<span class="hljs-string">&#x27;#ed3f14&#x27;</span> /&gt;</span>\n<span class="hljs-tag">&lt;<span class="hljs-name">AtDivider</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&#x27;没有更多了&#x27;</span> <span class="hljs-attr">fontColor</span>=<span class="hljs-string">&#x27;#ff9900&#x27;</span> <span class="hljs-attr">lineColor</span>=<span class="hljs-string">&#x27;#ff9900&#x27;</span> /&gt;</span>\n<span class="hljs-tag">&lt;<span class="hljs-name">AtDivider</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&#x27;没有更多了&#x27;</span> <span class="hljs-attr">fontColor</span>=<span class="hljs-string">&#x27;#2d8cf0&#x27;</span> <span class="hljs-attr">lineColor</span>=<span class="hljs-string">&#x27;#2d8cf0&#x27;</span> /&gt;</span>\n</code></pre>\n\n          </div>\n        </div><h2>自定义内容</h2>\n<p>说明：只有当 content 为空时，才能嵌套子组件</p>\n\n            <div class="md_code_wrapper">\n              <div class="md_code_inner"><pre class="hljs"><code>/* import { AtDivider,AtIcon } from &#x27;taro-ui&#x27; */\n<span class="hljs-tag">&lt;<span class="hljs-name">AtDivider</span>&gt;</span>\n  <span class="hljs-tag">&lt;<span class="hljs-name">AtIcon</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&#x27;check-circle&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">AtIcon</span>&gt;</span>\n<span class="hljs-tag">&lt;/<span class="hljs-name">AtDivider</span>&gt;</span>\n</code></pre>\n\n          </div>\n        </div><h2>参数</h2>\n<table>\n<thead>\n<tr>\n<th>参数</th>\n<th>说明</th>\n<th>类型</th>\n<th>可选值</th>\n<th>默认值</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>content</td>\n<td>分隔符文字</td>\n<td>String</td>\n<td>-</td>\n<td>-</td>\n</tr>\n<tr>\n<td>height</td>\n<td>分隔符高度，会自动转 rem,rpx</td>\n<td>String or Number</td>\n<td>-</td>\n<td>112</td>\n</tr>\n<tr>\n<td>fontColor</td>\n<td>文字颜色</td>\n<td>String</td>\n<td>-</td>\n<td>#6190E8</td>\n</tr>\n<tr>\n<td>fontSize</td>\n<td>文字大小，会自动转 rem,rpx</td>\n<td>String or Number</td>\n<td>-</td>\n<td>32</td>\n</tr>\n<tr>\n<td>lineColor</td>\n<td>分割线颜色</td>\n<td>String</td>\n<td>-</td>\n<td>#CCC</td>\n</tr>\n</tbody>\n</table>\n',
+          'text/html'
+        )
+        document
+          .getElementById('markdown_container')
+          .appendChild(n.documentElement.childNodes[1])
+      }),
+      []
+    )
+  }
+  class F extends I {
+    constructor(n) {
+      super(), N(this, n, z, L, r, {})
+    }
+  }
+  function P(t) {
+    let s, e, a, r, u, h, f, m, g
+    return (
+      (r = new F({})),
+      (h = new H({})),
+      {
+        c() {
+          ;(s = d('main')),
+            (e = d('div')),
+            (a = d('div')),
+            D(r.$$.fragment),
+            (u = i()),
+            D(h.$$.fragment),
+            (f = i()),
+            (m = d('div')),
+            (m.innerHTML =
+              '<iframe title="h5" src="http://0.0.0.0:10086/#/pages/basic/button/index"></iframe> \n    <div class="iphone-frame"></div>'),
+            p(a, 'class', 'docs_wrapper'),
+            p(e, 'class', 'main_wrapper svelte-1g8wy8j'),
+            p(m, 'class', 'demo-frame'),
+            p(s, 'class', 'svelte-1g8wy8j')
+        },
+        m(n, t) {
+          o(n, s, t),
+            l(s, e),
+            l(e, a),
+            E(r, a, null),
+            l(e, u),
+            E(h, e, null),
+            l(s, f),
+            l(s, m),
+            (g = !0)
+        },
+        p: n,
+        i(n) {
+          g || (C(r.$$.fragment, n), C(h.$$.fragment, n), (g = !0))
+        },
+        o(n) {
+          q(r.$$.fragment, n), q(h.$$.fragment, n), (g = !1)
+        },
+        d(n) {
+          n && c(s), S(r), S(h)
+        }
+      }
+    )
+  }
+  class U extends I {
+    constructor(n) {
+      super(), N(this, n, null, P, r, {})
+    }
+  }
+  function G(t) {
+    let s
+    return {
+      c() {
+        ;(s = d('div')),
+          (s.innerHTML =
+            '<div class="tab svelte-1sgksqf"><div class="tab_inner flex svelte-1sgksqf"><div class="svelte-1sgksqf">工具库</div> \n      <div class="svelte-1sgksqf">UI库</div> \n      <div class="svelte-1sgksqf">关于</div></div></div> \n  <div class="inner svelte-1sgksqf"></div>'),
+          p(s, 'class', 'siderBar svelte-1sgksqf')
+      },
+      m(n, t) {
+        o(n, s, t)
+      },
+      p: n,
+      i: n,
+      o: n,
+      d(n) {
+        n && c(s)
+      }
+    }
+  }
+  class J extends I {
+    constructor(n) {
+      super(), N(this, n, null, G, r, {})
+    }
+  }
+  function K(t) {
+    let s, e, a, r, u, h, f, m
+    return (
+      (e = new O({})),
+      (u = new U({})),
+      (f = new J({})),
+      {
+        c() {
+          ;(s = d('div')),
+            D(e.$$.fragment),
+            (a = i()),
+            (r = d('div')),
+            D(u.$$.fragment),
+            (h = i()),
+            D(f.$$.fragment),
+            p(r, 'class', 'content'),
+            p(s, 'class', 'wrapper')
+        },
+        m(n, t) {
+          o(n, s, t),
+            E(e, s, null),
+            l(s, a),
+            l(s, r),
+            E(u, r, null),
+            l(r, h),
+            E(f, r, null),
+            (m = !0)
+        },
+        p: n,
+        i(n) {
+          m ||
+            (C(e.$$.fragment, n),
+            C(u.$$.fragment, n),
+            C(f.$$.fragment, n),
+            (m = !0))
+        },
+        o(n) {
+          q(e.$$.fragment, n),
+            q(u.$$.fragment, n),
+            q(f.$$.fragment, n),
+            (m = !1)
+        },
+        d(n) {
+          n && c(s), S(e), S(u), S(f)
+        }
+      }
+    )
+  }
+  return new (class extends I {
+    constructor(n) {
+      super(), N(this, n, null, K, r, {})
+    }
+  })({ target: document.body, props: { name: 'world' } })
 })()
 //# sourceMappingURL=bundle.js.map

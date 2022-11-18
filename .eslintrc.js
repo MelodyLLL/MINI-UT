@@ -5,7 +5,8 @@ module.exports = {
     node: true,
     es6: true
   },
-  extends: ['eslint:recommended', 'prettier'],
+
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   globals: {
     // window: true,
     process: true
@@ -41,10 +42,14 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'no-empty-function': 'off',
         '@typescript-eslint/no-empty-function': 'warn'
+        // 'jsx-quotes': ['error', 'prefer-single']
       }
     },
     {
-      files: ['packages/miniso-ui-demo/**/*.ts', 'packages/miniso-ui-demo/**/*.tsx'],
+      files: [
+        'packages/miniso-ut-demo/**/*.ts',
+        'packages/miniso-ut-demo/**/*.tsx'
+      ],
       extends: ['taro/react']
     },
     {
@@ -54,7 +59,12 @@ module.exports = {
         sourceType: 'module',
         ecmaVersion: 12
       },
-      extends: ['plugin:import/errors', 'plugin:import/warnings', 'plugin:react/recommended', 'plugin:react-hooks/recommended']
+      extends: [
+        'plugin:import/errors',
+        'plugin:import/warnings',
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended'
+      ]
     }
   ]
 }

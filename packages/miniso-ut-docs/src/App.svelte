@@ -1,30 +1,29 @@
 <script>
-	export let name;
+  import Header from './components/Header.svelte'
+  import Main from './components/Main.svelte'
+  import Siderbar from './components/Siderbar.svelte'
+  // export let name
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<div class="wrapper">
+  <Header />
+  <div class="content">
+    <Main />
+    <Siderbar />
+  </div>
+</div>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+<style lang="scss" global>
+  @import './style/global.scss';
+  @import './style/markdown.scss';
+  @import './style/tint.scss';
+  @import './style/normalize.scss';
+  .wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  .wrapper .content {
+    display: flex;
+  }
 </style>
