@@ -1,6 +1,6 @@
 {
   "name": "@miniso/miniso-ut-docs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "scripts": {
     "build": "rollup -c ./config/rollup.config.js && node ./config/rm-h5",
