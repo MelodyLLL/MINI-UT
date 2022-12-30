@@ -1,6 +1,6 @@
 {
   "name": "@miniso/miniso-tools",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "for js sdk",
   "main": "dist/main.umd.js",
   "module": "dist/main.esm.js",
