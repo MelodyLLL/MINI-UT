@@ -1,6 +1,6 @@
 {
   "name": "@miniso/miniso-ui",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "module": "dist/index.esm.js",
   "main": "dist/index.js",
   "source": "src/index.ts",
@@ -22,7 +22,7 @@
   "author": "melodylll",
   "license": "MIT",
   "dependencies": {
-    "@miniso/miniso-tools": "^0.0.5"
+    "@miniso/miniso-tools": "^0.0.6"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
